@@ -7,7 +7,7 @@ application:
     pullPolicy: IfNotPresent
 
 serviceAccount:
-  create: true
+  create: false
   annotations: {}
   name: ""
 

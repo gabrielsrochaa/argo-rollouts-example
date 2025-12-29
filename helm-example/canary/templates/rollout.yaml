@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: {{ .Values.Application.Name }}
-  namespace: {{ .Values.Application.NameSpace }}
+  name: {{ .Values.Application.name }}
+  namespace: {{ .Values.Application.nameSpace }}
 spec:
   replicas: {{ .Values.rollout.replicas }}
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app: {{ .Values.Application.Name }}
+      app: {{ .Values.Application.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.Application.Name }}
+        app: {{ .Values.Application.name }}
     spec:
       containers:
-      - name: {{ .Values.Application.Name }}
+      - name: {{ .Values.Application.name }}
         image: {{ .Values.Application.image.name }}
         imagePullPolicy: {{ .Values.Application.image.pullPolicy }}
         ports:
@@ -38,8 +38,8 @@ spec:
     canary:
       maxSurge: 30%
       maxUnavailable: 0
-      stableService: {{ .Values.Application.Name }}-svc
-      canaryService: {{ .Values.Application.Name }}-preview
+      stableService: {{ .Values.Application.name }}-svc
+      canaryService: {{ .Values.Application.name }}-preview
       steps:
       - setCanaryScale:
           weight: 0
@@ -48,9 +48,9 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: {{ .Values.Application.Name }}-virtual-service
+            name: {{ .Values.Application.name }}-virtual-service
             routes:
-            - {{ .Values.Application.Name }}-svc
+            - {{ .Values.Application.name }}-svc
       steps:
       - pause: {}
       - setWeight: 20

@@ -1,15 +1,15 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: {{ .Values.Application.NameSpace }}-ingress-gateway
-  namespace: {{ .Values.Application.NameSpace }}
+  name: {{ .Values.Application.nameSpace }}-ingress-gateway
+  namespace: {{ .Values.Application.nameSpace }}
 spec:
   selector:
-    istio: ingressgateway-{{ .Values.Application.Name }}
+    istio: ingressgateway-{{ .Values.Application.name }}
   servers:
   - port:
       number: 80
       name: http
       protocol: HTTP
     hosts:
-    - "{{ .Values.Application.Dns }}"
+    - "{{ .Values.Application.dns }}"
