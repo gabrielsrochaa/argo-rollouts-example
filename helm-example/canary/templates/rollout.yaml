@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: {{ .Values.Application.Name }}
-        image: {{ .Values.Application.image }}
-        imagePullPolicy: Always
+        image: {{ .Values.Application.image.name }}
+        imagePullPolicy: {{ .Values.Application.image.pullPolicy }}
         ports:
         - name: http
           containerPort: 8080

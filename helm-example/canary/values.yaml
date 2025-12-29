@@ -2,7 +2,8 @@ application:
   dns: canary.dev.argoproj.io
   name: canary-demo
   nameSpace: canary-demo
-  image: argoproj/rollouts-demo:blue
+  image: 
+    name: argoproj/rollouts-demo:blue
     pullPolicy: IfNotPresent
 
 serviceAccount:
