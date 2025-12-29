@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.Application.Name }}
   namespace: {{ .Values.Application.NameSpace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.rollout.replicas }}
   revisionHistoryLimit: 1
   selector:
     matchLabels:
@@ -16,22 +16,45 @@ spec:
     spec:
       containers:
       - name: {{ .Values.Application.Name }}
-        image: argoproj/rollouts-demo:blue
+        image: {{ .Values.Application.image }}
         imagePullPolicy: Always
         ports:
         - name: http
           containerPort: 8080
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.rollout.livenessProbe.httpGet.path }}
+            port: {{ .Values.rollout.livenessProbe.httpGet.port }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.rollout.readinessProbe.httpGet.path }}
+            port: {{ .Values.rollout.readinessProbe.httpGet.port }}
         resources:
           requests:
-            memory: 32Mi
-            cpu: 5m
+            memory: {{ .Values.rollout.resources.requests.memory }}
+            cpu: {{ .Values.rollout.resources.requests.cpu }}
   strategy:
     canary:
+      maxSurge: 30%
+      maxUnavailable: 0
+      stableService: {{ .Values.Application.Name }}-svc
       canaryService: {{ .Values.Application.Name }}-preview
       steps:
-      - setWeight: 20
+      - setCanaryScale:
+          weight: 0
+      - setWeight: 25
       - pause: {}
+      trafficRouting:
+        istio:
+          virtualService:
+            name: {{ .Values.Application.Name }}-virtual-service
+            routes:
+            - {{ .Values.Application.Name }}-svc
+      steps:
+      - pause: {}
+      - setWeight: 20
+      - pause: {duration: 10}
       - setWeight: 40
       - pause: {duration: 10}
       - setWeight: 60
