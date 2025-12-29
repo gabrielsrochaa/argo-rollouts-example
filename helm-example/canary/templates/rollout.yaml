@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ .Values.Application.Name }}
+  namespace: {{ .Values.Application.NameSpace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.Application.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Application.Name }}
+    spec:
+      containers:
+      - name: {{ .Values.Application.Name }}
+        image: argoproj/rollouts-demo:blue
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            memory: 32Mi
+            cpu: 5m
+  strategy:
+    canary:
+      canaryService: {{ .Values.Application.Name }}-preview
+      steps:
+      - setWeight: 20
+      - pause: {}
+      - setWeight: 40
+      - pause: {duration: 10}
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
