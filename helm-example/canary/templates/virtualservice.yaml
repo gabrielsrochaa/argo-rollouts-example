@@ -5,16 +5,16 @@ metadata:
   namespace: {{ .Values.Application.nameSpace }}
 spec:
   hosts:
-    - "{{ .Values.Application.dns }}"
+    - "{{ .Values.application.dns }}"
   gateways:
-     - {{ .Values.Application.nameSpace }}-ingress-gateway
+     - {{ .Values.application.nameSpace }}-ingress-gateway
   http:
     - route:
         - destination:
-            host: {{ .Values.Application.name }}-svc.svc.cluster.local
+            host: {{ .Values.application.name }}-svc.svc.cluster.local
             subset: stable
           weight: 100
         - destination:
-            host: {{ .Values.Application.name }}-svc.svc.cluster.local
+            host: {{ .Values.application.name }}-svc.svc.cluster.local
             subset: canary
           weight: 0

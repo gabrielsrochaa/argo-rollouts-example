@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.Application.name }}-svc-preview
+  name: {{ .Values.application.name }}-preview
 spec:
   ports:
   - port: 80
@@ -9,4 +9,4 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: {{ .Values.Application.Name }}
+    app: {{ .Values.application.name }}
