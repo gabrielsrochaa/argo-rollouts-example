@@ -12,13 +12,13 @@ spec:
     - match:
       - uri:
           prefix: / 
-    - name: primary
-      route:
-      - destination:
-          host: {{ .Values.application.name }}-stable-svc
-          subset: stable
-        weight: 100
-      - destination:
-          host: {{ .Values.application.name }}-canary-svc
-          subset: canary
-        weight: 0
+        name: primary
+        route:
+        - destination:
+            host: {{ .Values.application.name }}-stable-svc
+            subset: stable
+          weight: 100
+        - destination:
+            host: {{ .Values.application.name }}-canary-svc
+            subset: canary
+          weight: 0
