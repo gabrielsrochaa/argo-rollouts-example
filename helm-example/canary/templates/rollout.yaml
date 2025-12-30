@@ -40,11 +40,6 @@ spec:
       maxUnavailable: 0
       stableService: {{ .Values.application.name }}-stable-svc
       canaryService: {{ .Values.application.name }}-canary-svc
-      steps:
-      - setCanaryScale:
-          weight: 0
-      - setWeight: 25
-      - pause: {}
       trafficRouting:
         istio:
           virtualService:
