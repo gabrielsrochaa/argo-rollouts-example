@@ -1,8 +1,8 @@
 kind: VirtualService
 apiVersion: networking.istio.io/v1
 metadata:
-  name: {{ .Values.Application.name }}-virtual-service
-  namespace: {{ .Values.Application.nameSpace }}
+  name: {{ .Values.application.name }}-virtual-service
+  namespace: {{ .Values.application.nameSpace }}
 spec:
   hosts:
     - "{{ .Values.application.dns }}"

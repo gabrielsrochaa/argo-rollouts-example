@@ -2,13 +2,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ .Values.Application.name }}-hpa
-  namespace: {{ .Values.Application.nameSpace }}
+  name: {{ .Values.application.name }}-hpa
+  namespace: {{ .Values.application.nameSpace }}
 spec:
   scaleTargetRef:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
-    name: {{ .Values.Application.Name }}
+    name: {{ .Values.application.Name }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

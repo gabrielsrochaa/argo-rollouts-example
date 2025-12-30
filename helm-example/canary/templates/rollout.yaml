@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: {{ .Values.Application.name }}
-  namespace: {{ .Values.Application.nameSpace }}
+  name: {{ .Values.application.name }}
+  namespace: {{ .Values.application.nameSpace }}
 spec:
   replicas: {{ .Values.rollout.replicas }}
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app: {{ .Values.Application.name }}
+      app: {{ .Values.application.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.Application.name }}
+        app: {{ .Values.application.name }}
     spec:
       containers:
-      - name: {{ .Values.Application.name }}
-        image: {{ .Values.Application.image.name }}
-        imagePullPolicy: {{ .Values.Application.image.pullPolicy }}
+      - name: {{ .Values.application.name }}
+        image: {{ .Values.application.image.name }}
+        imagePullPolicy: {{ .Values.application.image.pullPolicy }}
         ports:
         - name: http
           containerPort: 8080
@@ -38,8 +38,8 @@ spec:
     canary:
       maxSurge: 30%
       maxUnavailable: 0
-      stableService: {{ .Values.Application.name }}-svc
-      canaryService: {{ .Values.Application.name }}-preview
+      stableService: {{ .Values.application.name }}-svc
+      canaryService: {{ .Values.application.name }}-preview
       steps:
       - setCanaryScale:
           weight: 0
@@ -48,9 +48,9 @@ spec:
       trafficRouting:
         istio:
           virtualService:
-            name: {{ .Values.Application.name }}-virtual-service
+            name: {{ .Values.application.name }}-virtual-service
             routes:
-            - {{ .Values.Application.name }}-svc
+            - {{ .Values.application.name }}-svc
       steps:
       - pause: {}
       - setWeight: 20

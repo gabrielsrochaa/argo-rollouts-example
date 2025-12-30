@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.application.name }}-dr
   namespace: {{ .Values.application.nameSpace }}
 spec:
-  host: {{ .Values.Application.dns }}
+  host: {{ .Values.application.dns }}
   subsets:
     - labels:
         version: stable
