@@ -38,8 +38,8 @@ spec:
     canary:
       maxSurge: 30%
       maxUnavailable: 0
-      stableService: {{ .Values.application.name }}-svc
-      canaryService: {{ .Values.application.name }}-preview
+      stableService: {{ .Values.application.name }}-stable-svc
+      canaryService: {{ .Values.application.name }}-canary-svc
       steps:
       - setCanaryScale:
           weight: 0
