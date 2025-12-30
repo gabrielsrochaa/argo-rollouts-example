@@ -50,7 +50,8 @@ spec:
           virtualService:
             name: {{ .Values.application.name }}-virtual-service
             routes:
-            - {{ .Values.application.name }}-svc
+            - stable
+            - canary
       steps:
       - pause: {}
       - setWeight: 20
