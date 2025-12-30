@@ -8,7 +8,9 @@ spec:
   subsets:
     - name: stable
       labels:
+        version: v1
         app: {{ .Values.application.name }}
     - name: canary
       labels:
+        version: v2
         app: {{ .Values.application.name }}
