@@ -50,7 +50,11 @@ spec:
           virtualService:
             name: {{ .Values.application.name }}-virtual-service
             routes:
-            - canary-demo
+            - primary
+          destinationRule:
+            name: {{ .Values.application.name }}-dr
+            canarySubsetName: canary
+            stableSubsetName: stable
       steps:
       - pause: {}
       - setWeight: 20

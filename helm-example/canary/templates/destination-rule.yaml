@@ -6,9 +6,9 @@ metadata:
 spec:
   host: {{ .Values.application.dns }}
   subsets:
-    - labels:
-        version: stable
-      name: stable
-    - labels:
-        version: canary
-      name: canary
+    - name: stable
+      labels:
+        app: {{ .Values.application.name }}
+    - name: canary
+      labels:
+        app: {{ .Values.application.name }}
