@@ -38,8 +38,6 @@ spec:
     canary:
       maxSurge: 30%
       maxUnavailable: 0
-      stableService: {{ .Values.application.name }}-stable-svc
-      canaryService: {{ .Values.application.name }}-canary-svc
       trafficRouting:
         istio:
           virtualService:

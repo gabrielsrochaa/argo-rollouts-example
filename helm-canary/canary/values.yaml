@@ -1,0 +1,56 @@
+application:
+  dns: canary.dev.argoproj.io
+  name: canary-demo
+  nameSpace: canary-demo
+  image: 
+    name: argoproj/rollouts-demo:blue
+    pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+rollout:
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+  resources:
+    requests:
+      memory: 32Mi
+      cpu: 5m
+  replicas: 1
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

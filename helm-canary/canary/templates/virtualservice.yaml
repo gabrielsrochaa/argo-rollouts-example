@@ -1,0 +1,17 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1
+metadata:
+  name: {{ .Values.application.name }}-virtual-service
+  namespace: {{ .Values.application.nameSpace }}
+spec:
+  hosts:
+    - "{{ .Values.application.dns }}"
+  gateways:
+     - {{ .Values.application.nameSpace }}-ingress-gateway
+  http:
+    - name: primary
+      route:
+        - destination:
+            host: {{ .Values.application.name }}-svc.canary-demo.svc.cluster.local
+            port:
+              number: 80
