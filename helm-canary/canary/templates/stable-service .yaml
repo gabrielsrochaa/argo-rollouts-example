@@ -11,3 +11,4 @@ spec:
     nodePort: 30080
   selector:
     app: {{ .Values.application.name }}
+  type: NodePort
