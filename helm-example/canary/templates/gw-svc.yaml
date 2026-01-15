@@ -13,4 +13,4 @@ spec:
       targetPort: https
       name: https
   externalTrafficPolicy: Local
-  type: LoadBalancer
+  type: NodePort
